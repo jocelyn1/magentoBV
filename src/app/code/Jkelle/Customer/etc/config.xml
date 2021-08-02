@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <validation_form>
+            <fields>
+                <phone><![CDATA[/(0|\+33)[1-9]( *[0-9]{2}){4}/]]></phone>
+                <postcode><![CDATA[/^(([0-8][0-9])|(9[0-5]))[0-9]{3}$/]]></postcode>
+            </fields>
+        </validation_form>
+    </default>
+</config>

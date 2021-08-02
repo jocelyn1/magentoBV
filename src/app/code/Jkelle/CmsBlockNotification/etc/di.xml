@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Entity -->
+    <preference for="Jkelle\CmsBlockNotification\Api\Data\CmsBlockNotificationInterface"
+                type="Jkelle\CmsBlockNotification\Model\Entity\CmsBlockNotification"/>
+
+    <!-- Repository -->
+    <preference for="Jkelle\CmsBlockNotification\Api\Data\CmsBlockNotificationSearchResultsInterface"
+                type="Jkelle\CmsBlockNotification\Model\ResourceModel\CmsBlockNotification\CmsBlockNotificationSearchResults"/>
+    <preference for="Jkelle\CmsBlockNotification\Api\CmsBlockNotificationRepositoryInterface"
+                type="Jkelle\CmsBlockNotification\Model\Repository\CmsBlockNotificationRepository"/>
+
+    <!-- Adminhtml -->
+    <virtualType name="Jkelle\CmsBlockNotification\Ui\DataProvider\CmsBlockNotification\ListingDataProvider"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider"/>
+
+    <!-- Si on veut faire une jointure, on devra créé la classe et l'extends de SearchResult et override la methode _initSelect-->
+    <!-- Ou passer par un plugin c'est ce que je fais ici -->
+    <virtualType name="Jkelle\CmsBlockNotification\Model\ResourceModel\CmsBlockNotification\Listing\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">cms_block_notification</argument>
+            <argument name="resourceModel" xsi:type="string">Jkelle\CmsBlockNotification\Model\ResourceModel\CmsBlockNotification</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="notification_listing_data_source" xsi:type="string">Jkelle\CmsBlockNotification\Model\ResourceModel\CmsBlockNotification\Listing\Collection</item>
+            </argument>
+        </arguments>
+        <plugin name="grid_custom_column" type="Jkelle\CmsBlockNotification\Plugin\GridJoinCollection" sortOrder="5"/>
+    </type>
+
+</config>
